@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -29,5 +30,22 @@ class Film extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    /**
+     * Relationship: comments
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    /**
+     * Always provide full url
+     */
+    public function getPhotoAttribute($value) {
+        return Storage::disk('public')->url($value);
     }
 }

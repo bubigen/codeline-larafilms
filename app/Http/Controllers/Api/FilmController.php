@@ -50,6 +50,12 @@ class FilmController extends Controller
         try
         {
             $film = Film::create($request->all());
+            if($request->hasFile('photo')) {
+                $extension = $request->file('photo')->extension();
+                $path = $request->file('photo')->storeAs('photos/films', $film->id.".".$extension, 'public');
+                $film->photo = $path;
+                $film->save();
+            }
             return response()->json(['success' => true, 'film' => $film]);
         }
         catch(Exception $e)

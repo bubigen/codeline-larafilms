@@ -11,6 +11,14 @@
 |
 */
 
+Route::get('/films', 'Frontend\FilmController@index')->name('films.index');
+Route::get('/films/{slug}', 'Frontend\FilmController@show')->name('films.view');
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('films.index');
 });
+Auth::routes();
+
+Route::group(['middleware' => 'auth'], function () {
+	Route::post('/films/comment', 'Frontend\FilmController@createComment')->name('films.comment.store');	
+});
+Route::get('/home', 'HomeController@index')->name('home');
