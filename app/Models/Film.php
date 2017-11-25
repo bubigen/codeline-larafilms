@@ -45,7 +45,9 @@ class Film extends Model
     /**
      * Always provide full url
      */
+    /*
     public function getPhotoAttribute($value) {
         return Storage::disk('public')->url($value);
     }
+    */
 }

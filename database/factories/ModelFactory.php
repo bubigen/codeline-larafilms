@@ -12,6 +12,21 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+$factory->define(App\Models\Film::class, function (Faker\Generator $faker) {
+	$fakerName = $faker->name;
+    return [
+        'name' => $faker->title,
+        'description' => $faker->paragraph,
+        'rating' => $faker->numberBetween(1, 5),
+        'ticket_price' => $faker->numberBetween(10, 50),
+        'country' => $faker->country,
+        'photo'	=> $faker->imageUrl(),
+        'release_date' => $faker->date('Y-m-d'),
+        'slug' => str_slug($fakerName)
+    ];
+});
+
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
@@ -20,5 +35,13 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+});
+
+$factory->define(App\Models\Comment::class, function (Faker\Generator $faker) {
+    return [
+        'body' => $faker->paragraph,
+        'user_id' => $faker->numberBetween(1, 3),
+        'commentable_type' => 'App\Models\Film'
     ];
 });

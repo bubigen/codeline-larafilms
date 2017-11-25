@@ -53,7 +53,7 @@ class FilmController extends Controller
             if($request->hasFile('photo')) {
                 $extension = $request->file('photo')->extension();
                 $path = $request->file('photo')->storeAs('photos/films', $film->id.".".$extension, 'public');
-                $film->photo = $path;
+                $film->photo = Storage::disk('public')->url($path);
                 $film->save();
             }
             return response()->json(['success' => true, 'film' => $film]);
@@ -114,7 +114,7 @@ class FilmController extends Controller
             if($request->hasFile('photo')) {
                 $extension = $request->file('photo')->extension();
                 $path = $request->file('photo')->storeAs('photos/films', $film->id.".".$extension, 'public');
-                $film->photo = $path;
+                $film->photo = Storage::disk('public')->url($path);
             }
             $film->fill($request->input())->save();
             return response()->json(['success' => true, 'film' => $film]);

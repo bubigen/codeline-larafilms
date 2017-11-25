@@ -8,7 +8,7 @@
 				<div class="preview col-md-6">
 					
 					<div class="preview-pic">
-					  <img src="{{ $film->photo }}" />
+					  <img class="img-rounded img-responsive" src="{{ $film->photo }}" />
 					</div>					
 				</div>
 				<div class="details col-md-6">
